@@ -1,0 +1,375 @@
+
+from tkinter import *
+import pymysql
+import math,random,os
+from tkinter import messagebox
+
+class Bill_App:
+    def __init__(self,root):
+        self.root=root
+        self.root.title("Billing System")
+        self.root.geometry("1500x700+0+0")
+        title=Label(self.root,text="BILLING SOFTWARE",font=("times new roman",30,"bold"),bd=12,relief=GROOVE,bg="blue",fg="black")
+        title.pack()
+
+ ####save fielf CUSTOMER
+        self.c_name = StringVar()
+        self.c_phone = StringVar()
+        self.bill_no = StringVar()
+        x=random.randint(1000,9999)
+        self.bill_no.set(str(x))
+        self.search = StringVar()
+
+####save field SOOCER####
+        self.foot=IntVar()
+        self.stud = IntVar()
+        self.shin=IntVar()
+        self.jersey=IntVar()
+        self.stock=IntVar()
+
+####save field CRICKET#####
+        self.bat=IntVar()
+        self.ball =IntVar()
+        self.jersi=IntVar()
+        self.pads=IntVar()
+        self.shoe=IntVar()
+
+####save field TOTAL
+        self.soocer=StringVar()
+        self.cricket=StringVar()
+
+
+###frame1 CUSTOMER DETAILS###
+
+        f1=LabelFrame(self.root,text="Customer Details",pady=5,padx=2,font=("times new roman",25,"bold"),bd=12,relief=GROOVE,bg="skyblue",fg="black")
+        f1.place(x=0,y=80,width=1360,height=110)
+
+        cname=Label(f1,text="Customer name",pady=1,padx=2,bg="skyblue",fg="white",font=("times new roman",20,"bold")).grid(column=0,row=0)
+        cnametxt=Entry(f1,width=15,textvariable=self.c_name,font=("times new roman",20),bd=7).grid(column=1,row=0,padx=10)
+
+        cphone = Label(f1, text="Contact", pady=1, padx=2, bg="skyblue", fg="white",font=("times new roman", 20, "bold")).grid(column=2, row=0)
+        cphonetxt = Entry(f1, width=15,textvariable=self.c_phone,font=("times new roman", 20), bd=7).grid(column=3, row=0,padx=10)
+
+        cbill = Label(f1, text="Bill No", pady=1, padx=2, bg="skyblue", fg="white",font=("times new roman", 20, "bold")).grid(column=4, row=0)
+        cbilltxt = Entry(f1, width=15,textvariable=self.search,font=("times new roman", 20), bd=7).grid(column=5, row=0,padx=10)
+
+        searchbtn=Button(f1,text="Search",pady=1,padx=2,bg="white",bd=3,relief=GROOVE,command=self.find_bill, fg="black",font=("times new roman", 20, "bold")).grid(column=6, row=0,padx=10)
+
+### frame 2 f2 SOCCER####
+
+        f2=LabelFrame(self.root,text="Soccer",pady=5,padx=2,font=("times new roman",20,"bold"),bd=12,relief=GROOVE,bg="skyblue",fg="black")
+        f2.place(x=0, y=200, width=400, height=340)
+
+        footlabel=Label(f2,text="Football",font=("times new roman",15,"bold"),bd=12,bg="skyblue",fg="white").grid(row=0,column=0,padx=5,pady=5,sticky="w")
+        footentry= Entry(f2,width=10,textvariable=self.foot,font=("times new roman", 15),bd=7).grid(column=1, row=0,padx=5,pady=5)
+
+        studlabel = Label(f2, text="Studs", font=("times new roman", 15, "bold"), bd=12, bg="skyblue",fg="white").grid(row=1, column=0, padx=5, pady=5, sticky="w")
+        studentry = Entry(f2, width=10,textvariable=self.stud,font=("times new roman", 15), bd=7).grid(column=1, row=1, padx=5, pady=5)
+
+        shinlabel = Label(f2, text="Shinpad", font=("times new roman", 15, "bold"), bd=12, bg="skyblue", fg="white").grid(row=2, column=0, padx=5, pady=5, sticky="w")
+        shinentry = Entry(f2, width=10,textvariable=self.shin,font=("times new roman", 15), bd=7).grid(column=1, row=2, padx=5, pady=5)
+
+        jerseylabel = Label(f2, text="Jersey", font=("times new roman", 15, "bold"), bd=12, bg="skyblue",fg="white").grid(row=3, column=0, padx=5, pady=5, sticky="w")
+        jerseyentry = Entry(f2, width=10,textvariable=self.jersey,font=("times new roman", 15), bd=7).grid(column=1, row=3,padx=5,pady=5)
+
+        stocklabel = Label(f2, text="Stockings", font=("times new roman", 15, "bold"), bd=12, bg="skyblue",
+                            fg="white").grid(row=4, column=0, padx=5, pady=5, sticky="w")
+        stockentry = Entry(f2, width=10,textvariable=self.stock,font=("times new roman", 15), bd=7).grid(column=1, row=4, padx=5, pady=5)
+
+#### frame 3 f3 CRICKET####
+
+        f3 = LabelFrame(self.root, text="Cricket", pady=5, padx=2, font=("times new roman", 20, "bold"), bd=12,
+                        relief=GROOVE, bg="skyblue", fg="black")
+        f3.place(x=460,y=200, width=400, height=340)
+
+        batlabel = Label(f3, text="Bat", font=("times new roman", 15, "bold"), bd=12, bg="skyblue", fg="white").grid(row=0, column=0, padx=5, pady=5, sticky="w")
+        batentry = Entry(f3, width=10,textvariable=self.bat,font=("times new roman", 15), bd=7).grid(column=1, row=0, padx=5, pady=5)
+
+        balllabel = Label(f3, text="Ball", font=("times new roman", 15, "bold"), bd=12, bg="skyblue", fg="white").grid( row=1, column=0, padx=5, pady=5,sticky="w")
+        ballentry = Entry(f3, width=10,textvariable=self.ball,font=("times new roman", 15), bd=7).grid(column=1, row=1, padx=5, pady=5)
+
+        jersilabel = Label(f3, text="Jersey", font=("times new roman", 15, "bold"), bd=12, bg="skyblue",
+                          fg="white").grid(row=2, column=0, padx=5, pady=5, sticky="w")
+        jersientry = Entry(f3, width=10,textvariable=self.jersi,font=("times new roman", 15), bd=7).grid(column=1, row=2, padx=5, pady=5)
+
+        padlabel = Label(f3, text="Pads", font=("times new roman", 15, "bold"), bd=12, bg="skyblue",
+                            fg="white").grid(row=3, column=0, padx=5, pady=5, sticky="w")
+        padentry = Entry(f3, width=10,textvariable=self.pads,font=("times new roman", 15), bd=7).grid(column=1, row=3, padx=5, pady=5)
+
+        shoelabel = Label(f3, text="Shoe", font=("times new roman", 15, "bold"), bd=12, bg="skyblue",
+                            fg="white").grid(row=4, column=0, padx=5, pady=5, sticky="w")
+        shoeentry = Entry(f3, width=10,textvariable=self.shoe,font=("times new roman", 15), bd=7).grid(column=1, row=4, padx=5, pady=5)
+
+### frame 4 f4 TEXT AREA #####
+        f4=LabelFrame(self.root,bd=7,relief=GROOVE)
+        f4.place(x=920,y=200,width=400,height=340)
+
+        billabel=Label(f4,text="Bill",font=("times new roman", 20, "bold"),bd=12, bg="white",fg="black").pack(fill=X)
+        scrol_y=Scrollbar(f4,orient=VERTICAL)
+        self.txtarea=Text(f4,yscrollcommand=scrol_y.set)
+        scrol_y.pack(fill=Y,side=RIGHT)
+        scrol_y.config(command=self.txtarea.yview)
+        self.txtarea.pack(fill=BOTH,expand=1)
+
+###BUTTON FRAME PRICES #####
+        f5=LabelFrame(self.root,bd=7,text="Bill Menu", pady=5, padx=2, font=("times new roman",20,"bold"),relief=GROOVE,bg="skyblue")
+        f5.place(x=0,y=550,width=400,height=140)
+
+        fblbl=Label(f5,text="Soccer price",font=("times new roman",20,"bold")).grid(column=0,row=0,padx=5,pady=5)
+        fbent=Entry(f5,textvariable=self.soocer,font=("times new roman",20,"bold"),width=10).grid(column=1,row=0,padx=5,pady=5)
+
+        cblbl = Label(f5, text="Cricket price", font=("times new roman", 20, "bold")).grid(column=0, row=1, padx=5,pady=5)
+        cbent = Entry(f5, textvariable=self.cricket,font=("times new roman",20, "bold"), width=10).grid(column=1, row=1, padx=5, pady=5)
+
+####btn frame TOTAL BILL CLEAR EXIT SHOW PRICE #####
+        f6=Frame(self.root,bd=7,bg="skyblue",relief=GROOVE)
+        f6.place(x=450,y=550,width=900,height=140)
+
+        tbtn=Button(f6,text="Total",command=self.total,pady=5,padx=5,width=7,bg="white",bd=7,relief=GROOVE,fg="black",font=("times new roman", 20, "bold")).grid(column=0,row=0,padx=15,pady=10)
+        gbtn = Button(f6, text="Generate Bill", pady=5, padx=5,command=self.bill_area,width=10, bg="white", bd=7, relief=GROOVE, fg="black",
+                      font=("times new roman", 20, "bold")).grid(column=1, row=0, padx=10, pady=10)
+        cbtn = Button(f6, text="Clear",command=self.clear,pady=5, padx=5, width=7, bg="white", bd=7, relief=GROOVE, fg="black",
+                      font=("times new roman", 20, "bold")).grid(column=2, row=0, padx=10, pady=10)
+        ebtn = Button(f6, text="Exit", pady=5, padx=5,command=self.exitt,width=7, bg="white", bd=7, relief=GROOVE, fg="black",
+                      font=("times new roman", 20, "bold")).grid(column=3, row=0, padx=10, pady=10)
+        sbtn= Button(f6, text="Show Price", pady=5, padx=5,command=self.show_price,width=7, bg="white", bd=7, relief=GROOVE, fg="black",
+                      font=("times new roman", 20, "bold")).grid(column=4, row=0, padx=10, pady=10)
+        self.welcome_bill()
+
+####function for GENERATING TOTAL PRICE ####
+
+    def total(self):
+        self.fp=self.foot.get()*500
+        self.stp=self.stud.get()*400
+        self.shp=self.shin.get()*200
+        self.jsp=self.jersey.get()*300
+        self.skp=self.stock.get()*60
+        self.total_soocer_price=(
+                                    (self.fp)+
+                                    (self.stp)+
+                                    (self.shp)+
+                                    (self.jsp)+
+                                    (self.skp)
+                                )
+        self.soocer.set("Rs "+str(self.total_soocer_price))
+
+        self.btp=self.bat.get() * 800
+        self.blp=self.ball.get() * 40
+        self.jip=self.jersi.get() * 300
+        self.pp=self.pads.get() * 200
+        self.sp=self.shoe.get() * 200
+
+        self.total_cricket_price = (
+                                    (self.btp) +
+                                    (self.blp) +
+                                    (self.jip) +
+                                    (self.pp) +
+                                    (self.sp)
+                                    )
+        self.cricket.set("Rs "+str(self.total_cricket_price))
+
+#function for generating BILL AREA
+
+    def welcome_bill(self):
+        self.txtarea.delete('1.0',END)
+        self.txtarea.insert(END,"\t\t   ADIBAS")
+        self.txtarea.insert(END,"\n Bill Number :")
+        self.txtarea.insert(END,"\t"+self.bill_no.get())
+        self.txtarea.insert(END,"\nCustomer name :")
+        self.txtarea.insert(END, "\t" + self.c_name.get())
+        self.txtarea.insert(END,"\nPhone no. :")
+        self.txtarea.insert(END, "\t" +self.c_phone.get())
+        self.txtarea.insert(END, "\n*********************************************")
+        self.txtarea.insert(END, "\nProduct\t\tQuantity\t\t\tPrice")
+        self.txtarea.insert(END, "\n*********************************************")
+
+    def bill_area(self):
+        if self.c_name.get()=="" or self.c_phone.get()=="":
+            messagebox.showerror("Error","Customer details are must")
+        elif self.total_soocer_price==0 and self.total_cricket_price==0:
+            messagebox.showerror("Error","No products selected")
+        else:
+            self.welcome_bill()
+            if self.foot.get()!=0:
+                self.txtarea.insert(END, "\nFootball")
+                self.txtarea.insert(END,"\t\t")
+                self.txtarea.insert(END,self.foot.get())
+                self.txtarea.insert(END,"\t\t\t")
+                self.txtarea.insert(END,self.fp)
+
+            if self.stud.get()!=0:
+                self.txtarea.insert(END, "\nStuds")
+                self.txtarea.insert(END,"\t\t")
+                self.txtarea.insert(END,self.stud.get())
+                self.txtarea.insert(END,"\t\t\t")
+                self.txtarea.insert(END,self.stp)
+
+            if self.shin.get() != 0:
+               self.txtarea.insert(END, "\nShin")
+               self.txtarea.insert(END, "\t\t")
+               self.txtarea.insert(END, self.shin.get())
+               self.txtarea.insert(END, "\t\t\t")
+               self.txtarea.insert(END, self.sp)
+
+            if self.jersey.get()!=0:
+                self.txtarea.insert(END, "\nJersey")
+                self.txtarea.insert(END,"\t\t")
+                self.txtarea.insert(END,self.jersey.get())
+                self.txtarea.insert(END,"\t\t\t")
+                self.txtarea.insert(END,self.jsp)
+
+            if self.stock.get() != 0:
+               self.txtarea.insert(END, "\nStock")
+               self.txtarea.insert(END, "\t\t")
+               self.txtarea.insert(END, self.stock.get())
+               self.txtarea.insert(END, "\t\t\t")
+               self.txtarea.insert(END, self.skp)
+
+            if self.bat.get() != 0:
+               self.txtarea.insert(END, "\nBat")
+               self.txtarea.insert(END, "\t\t")
+               self.txtarea.insert(END, self.bat.get())
+               self.txtarea.insert(END, "\t\t\t")
+               self.txtarea.insert(END, self.btp)
+
+            if self.ball.get() != 0:
+               self.txtarea.insert(END, "\nBall")
+               self.txtarea.insert(END, "\t\t")
+               self.txtarea.insert(END, self.ball.get())
+               self.txtarea.insert(END, "\t\t\t")
+               self.txtarea.insert(END, self.blp)
+
+            if self.jersi.get() != 0:
+               self.txtarea.insert(END, "\nJerseyC")
+               self.txtarea.insert(END, "\t\t")
+               self.txtarea.insert(END, self.jersi.get())
+               self.txtarea.insert(END, "\t\t\t")
+               self.txtarea.insert(END, self.jip)
+
+            if self.pads.get() != 0:
+               self.txtarea.insert(END, "\nPads")
+               self.txtarea.insert(END, "\t\t")
+               self.txtarea.insert(END, self.pads.get())
+               self.txtarea.insert(END, "\t\t\t")
+               self.txtarea.insert(END, self.pp)
+
+            if self.shoe.get() != 0:
+               self.txtarea.insert(END, "\nShoe")
+               self.txtarea.insert(END, "\t\t")
+               self.txtarea.insert(END, self.shoe.get())
+               self.txtarea.insert(END, "\t\t\t")
+               self.txtarea.insert(END, self.sp)
+
+            self.txtarea.insert(END, "\n*********************************************")
+            self.txtarea.insert(END, "\n*********************************************")
+
+            self.txtarea.insert(END, "\nTotal Soccer price:")
+            self.txtarea.insert(END, "\t\t")
+            self.txtarea.insert(END, self.total_soocer_price)
+            self.txtarea.insert(END, "\nTotal Cricket price: ")
+            self.txtarea.insert(END, "\t\t")
+            self.txtarea.insert(END, self.total_cricket_price)
+            self.total_price=self.total_cricket_price+self.total_soocer_price
+            print(type(self.total_price))
+            self.txtarea.insert(END,"\n\nTotal price: \t\tRs ")
+            self.txtarea.insert(END, self.total_price)
+            self.save_bill()
+            self.database()
+
+                #self.txtarea.insert(END,"\n\nTotal price: Rs 0.0")
+
+####function for SAVING BILL
+
+    def save_bill(self):
+        op=messagebox.askyesno("Save bill","Do you want to save the bill?")
+        if op>0:
+            self.billdata=self.txtarea.get('1.0',END)
+            f1=open("bills/"+str(self.bill_no.get())+".txt","w")
+            f1.write(self.billdata)
+            f1.close()
+            messagebox.showinfo("Saved","Bill Saved Successfully")
+        else:
+            return
+
+####function for FINDING BILL
+
+    def find_bill(self):
+        present="no"
+        for i in os.listdir("bills/"):
+            if i.split('.')[0]==self.search.get():
+                f1=open(f"bills/{i}","r")
+                self.txtarea.delete('1.0',END)
+                for d in f1:
+                    self.txtarea.insert(END,d)
+                f1.close()
+                present="yes"
+        if present=="no":
+            messagebox.showerror("Error","Invalid bill No.")
+
+###function for CLEARING DATA
+
+    def clear(self):
+        op=messagebox.askyesno("Clear","Do you really want to clear data?")
+        if op>0:
+            self.c_name.set("")
+            self.c_phone.set("")
+            self.search.set=("")
+
+            self.foot.set("0")
+            self.stud.set("0")
+            self.jersey.set("0")
+            self.shin.set ("0")
+            self.stock.set("0")
+
+            self.bat.set("0")
+            self.ball.set("0")
+            self.jersi.set("0")
+            self.pads.set("0")
+            self.shoe.set("0")
+
+            self.cricket.set("")
+            self.soocer.set("")
+
+####function for showing PRICES OF PORDUCTS
+
+    def show_price(self):
+        self.foot.set("500")
+        self.stud.set("400")
+        self.jersey.set("200")
+        self.shin.set("300")
+        self.stock.set("60")
+
+        self.bat.set("800")
+        self.ball.set("40")
+        self.jersi.set("300")
+        self.pads.set("200")
+        self.shoe.set("200")
+
+###function for EXIT
+
+    def exitt(self):
+        op=messagebox.askyesno("Exit","Do you want to exit?")
+        if op>0:
+            self.root.destroy()
+
+###ADDING RECORD TO DATABASE
+
+    def database(self):
+        con=pymysql.connect(host="localhost",user="root",password="password",database="bill_app")
+        cur=con.cursor()
+        cur.execute("insert into bill values(%s,%s,%s,%s)",(self.bill_no.get(),
+                                                            self.c_name.get(),
+                                                            self.c_phone.get(),
+                                                            self.total_price))
+
+
+        con.commit()
+        con.close()
+        messagebox.showinfo("Successfull","Record has been added")
+
+
+root=Tk()
+obj=Bill_App(root)
+root.mainloop()
+
+###################################################  BY SHUBHAM SURVE  #################################################
