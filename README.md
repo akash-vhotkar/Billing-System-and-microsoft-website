@@ -1,2 +1,2 @@
-# project1
+# project
 my project is  about daily basis projects 
