@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+        integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+        crossorigin="anonymous" />
+    <script src="https://use.fontawesome.com/891c82ad40.js"></script>
+    <title>to do list</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-image: url(dow.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-family: Arial, Helvetica, sans-serif;
+
+    }
+
+    header {
+        font-size: 1.5rem;
+
+    }
+
+    header,
+    form {
+        min-height: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    form input,
+    form button {
+        padding: 0.5rem;
+        font-size: 2rem;
+        border: none;
+        background-color: white;
+    }
+
+    form button {
+        color: darkorange;
+        background-color: white;
+    }
+
+    .todo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .todo-list {
+        min-width: 40%;
+        list-style: none;
+    }
+
+    .todo {
+        margin: 10px;
+        background-color: white;
+        color: black;
+        list-style: none;
+        font-size: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .todo li {
+        flex: 2;
+    }
+
+    .complrtr-btn,
+    .trash-btn {
+        background-color: green;
+        color: white;
+        border: none;
+        padding: 1rem;
+
+    }
+
+    .trash-btn {
+        background-color: orange;
+    }
+</style>
+
+<body>
+    <header> akash todo list</header>
+    <form action="#">
+        <input type="text" class="todo-input">
+        <button type="submit" class="todo-button">
+            <i class="fas fa-plus-square"></i>
+        </button>
+    </form>
+    <div class="todo-container">
+        <ul class="todo-list"></ul>
+    </div>
+
+</body>
+<script>
+    const todoInput = document.querySelector(".todo-input");
+    const todoButton = document.querySelector(".todo-button");
+    const todoList = document.querySelector(".todo-list");
+
+    todoButton.addEventListener("click", addTodo);
+
+    function addTodo(event) {
+        const todoDiv = document.createElement("div");
+        todoDiv.classList.add("todo");
+        const newTodo = document.createElement('li');
+        newTodo.innerHTML = 'hey';
+        newTodo.classList.add('todo-item');
+        todoDiv.appendChild(newTodo);
+
+        const completebutton = document.createElement('button');
+        completebutton.innerHTML = '<i class = "fas fa-check"></i>';
+        completebutton.classList.add("complrtr-btn");
+        todoDiv.appendChild(completebutton);
+
+        const trashbutton = document.createElement('button');
+        trashbutton.innerHTML = '<i class = "fas fa-trash"></i>';
+        trashbutton.classList.add("trash-btn");
+        todoDiv.appendChild(trashbutton);
+
+        todoList.appendChild(todoDiv);
+
+
+
+
+
+
+
+    }
+
+
+</script>
+
+</html>
