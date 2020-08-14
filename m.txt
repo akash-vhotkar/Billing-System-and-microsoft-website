@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 akash vhotkar vhotkar akasj akash
+=======
+akash vhotkar vhotkar akasj
+>>>>>>> devlopment
