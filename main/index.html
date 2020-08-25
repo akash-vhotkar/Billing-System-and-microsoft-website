@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+        integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+        crossorigin="anonymous" />
+    <title>Booklist project</title>
+</head>
+
+<body>
+    <button id="button"> get text file </button>
+    <div class="container">
+        <h1>Employee list</h1>
+        <ul id="list"></ul>
+    </div>
+    <script>
+        // {"name":"test","salary":"123","age":"23"}
+        let obj = {
+            name: "akasj",
+            lastname: "vhotkar",
+            fullnam: function () {
+                console.log(`the full name of the client is ${this.name}  and last name is ${this.lastname} `);
+            }
+        }
+        console.log(obj.fullnam());
+
+        document.getElementById('button').addEventListener('click', load);
+        function load() {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://dummy.restapiexample.com/api/v1/employees', true);
+            xhr.onload = function () {
+                if (this.status == 200) {
+
+                    let obj = JSON.parse(this.responseText);
+                    console.log(obj);
+                    let list = document.getElementById("list");
+                    str = "";
+                    for (key in obj) {
+                        str += `<li>${obj[key].employee_name} </li>`;
+                    }
+                    list.innerHTML = str + "asjdhj";
+                }
+                else {
+                    console.log("thire is some error while handlinhh such kind thingfs ");
+                }
+            }
+            xhr.send();
+
+        }
+    </script>
+</body>
+
+</html>

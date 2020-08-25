@@ -1,0 +1,6 @@
+my name is akash  vhotkar 
+
+
+the file is called succefully the ajax is technology which arw  been used for data transfer from one point to another point
+ajax load the data without reg=fresh the webpage
+
